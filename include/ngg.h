@@ -1,6 +1,8 @@
 #ifndef NGG_H
 #define NGG_H
 
+#include <stdbool.h>
+
 #define NGG_DIFFICULTY_COUNT 3
 extern const int NGG_DIFFICULTY_CHANCES[NGG_DIFFICULTY_COUNT];
 extern const char *NGG_DIFFICULTY_NAMES[NGG_DIFFICULTY_COUNT];
