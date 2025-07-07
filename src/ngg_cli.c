@@ -22,7 +22,7 @@ int ngg_start_cli() {
     printf("\nGreat! You have selected the %s difficulty leve.\n", NGG_DIFFICULTY_NAMES[game_state.difficulty_level - 1]);
     while(!game_state.game_over) {
         printf("\nI'm thinking of a number between 1 and 100.\n");
-        game_state.random_number = random_number(1, 100);
+        game_state.random_number = 77;
         game_state.chances_left = NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1];
         game_state.attempts = 0;
         printf("You have %d chances to guess the number.\n\n", NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1]);
@@ -64,7 +64,7 @@ void difficulty_selection(ngg_state *game_state) {
     for(int i = 0; i < difficulty_count; i++) {
         printf(" %d. %s (%d chances)\n", i + 1, NGG_DIFFICULTY_NAMES[i], NGG_DIFFICULTY_CHANCES[i]);
     }
-    game_state->difficulty_level = read_int("Enter your choice: ", 1, difficulty_count);
+    game_state->difficulty_level = read_int("\nEnter your choice: ", 1, difficulty_count);
 }
 int read_int(const char *prompt, int min, int max) {
     char buffer[64];
