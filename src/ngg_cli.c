@@ -19,7 +19,7 @@ int ngg_start_cli() {
 
     game_state.game_over = false;
 
-    printf("\nGreat! You have selected the %s difficulty leve.\n", NGG_DIFFICULTY_NAMES[game_state.difficulty_level - 1]);
+    printf("\nGreat! You have selected the %s difficulty level.\n", NGG_DIFFICULTY_NAMES[game_state.difficulty_level - 1]);
     while(!game_state.game_over) {
         printf("\nI'm thinking of a number between 1 and 100.\n");
         game_state.random_number = 77;
