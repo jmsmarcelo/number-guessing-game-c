@@ -11,6 +11,50 @@ int read_int(const char *, int, int);
 void play_again_prompt(bool *);
 
 int ngg_start_cli() {
+    ngg_state game_state;
+
+    printf("\nWelcome to the Number Guessing Game!\n\n");
+
+    difficulty_selection(&game_state);
+
+    game_state.game_over = false;
+
+    printf("\nGreat! You have selected the %s difficulty leve.\n", NGG_DIFFICULTY_NAMES[game_state.difficulty_level - 1]);
+    while(!game_state.game_over) {
+        printf("\nI'm thinking of a number between 1 and 100.\n");
+        game_state.random_number = random_number(1, 100);
+        game_state.chances_left = NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1];
+        game_state.attempts = 0;
+        printf("You have %d chances to guess the number.\n\n", NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1]);
+        printf("Let's start the game!\n\n");
+
+        while(game_state.chances_left > 0) {
+            int guess = read_int("Enter your guess: ", 1, 100);
+            game_state.attempts++;
+            game_state.chances_left--;
+
+            if(guess == game_state.random_number) {
+                printf("\nCongratulations! You guessed the correct number in %d attempts!\n", game_state.attempts);
+                game_state.chances_left = 0;
+                game_state.attempts = 0;
+                continue;
+            } else if(guess < game_state.random_number) {
+                printf("Incorrect!\nThe number is greater than %d.\n", guess);
+            } else {
+                printf("Incorrect!\nThe number is less than %d.\n", guess);
+            }
+            if(game_state.chances_left == 0) {
+                printf("\nSorry. you've run out of chances.\n");
+            } else if(game_state.chances_left == 1) {
+                const char *tip = (game_state.random_number % 2 == 0) ? "even" : "odd";
+                printf("The number is %s.\n\n", tip);
+            } else {
+                printf("\n");
+            }
+        }
+        play_again_prompt(&game_state.game_over);
+    }
+
     return 0;
 }
 
@@ -31,7 +75,7 @@ int read_int(const char *prompt, int min, int max) {
             printf("Error reading input. Please try again.\n");
             continue;
         }
-        buffer[strcspn(buffer, '\n')] = 0;
+        buffer[strcspn(buffer, "\n")] = 0;
         char *endptr;
         value = strtol(buffer, &endptr, 10);
         if(endptr == buffer || *endptr != '\0') {
@@ -53,7 +97,7 @@ void play_again_prompt(bool *game_over) {
             printf("Error reading input.\n");
             continue;
         }
-        buffer[strcspn(buffer, '\n')] = 0;
+        buffer[strcspn(buffer, "\n")] = 0;
         if(strlen(buffer) == 1 && (buffer[0] == 'y' || buffer[0] == 'Y' || buffer[0] == 'n' || buffer[0] == 'N')) {
             if(buffer[0] == 'n' || buffer[0] == 'N') {
                 *game_over = true;
