@@ -22,7 +22,7 @@ int ngg_start_cli() {
     printf("\nGreat! You have selected the %s difficulty level.\n", NGG_DIFFICULTY_NAMES[game_state.difficulty_level - 1]);
     while(!game_state.game_over) {
         printf("\nI'm thinking of a number between 1 and 100.\n");
-        game_state.random_number = 77;
+        game_state.random_number = random_number(1, 100);
         game_state.chances_left = NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1];
         game_state.attempts = 0;
         printf("You have %d chances to guess the number.\n\n", NGG_DIFFICULTY_CHANCES[game_state.difficulty_level - 1]);
